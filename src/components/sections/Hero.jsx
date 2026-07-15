@@ -1,10 +1,13 @@
+import HeroMockup from "../ui/HeroMockup";
+
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-40 pb-28 md:pt-48 md:pb-36">
+    <section id="top" className="relative overflow-hidden pt-40 pb-20 md:pt-48 md:pb-28">
       {/* fondo decorativo con degradados, al estilo del logo */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-secondary/25 blur-[120px]" />
-        <div className="absolute top-1/3 -left-24 h-80 w-80 rounded-full bg-primary/20 blur-[100px]" />
+        <div className="absolute -top-56 left-1/2 h-[44rem] w-[60rem] -translate-x-1/2 rounded-full bg-secondary/30 blur-[140px]" />
+        <div className="absolute -top-20 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary/25 blur-[110px]" />
+        <div className="absolute top-1/3 -left-24 h-80 w-80 rounded-full bg-primary/15 blur-[100px]" />
         <div className="absolute -bottom-20 right-0 h-96 w-96 rounded-full bg-cyan/10 blur-[110px]" />
         <svg
           className="absolute inset-0 h-full w-full opacity-[0.06]"
@@ -50,6 +53,8 @@ export default function Hero() {
           </a>
         </div>
       </div>
+
+      <HeroMockup />
     </section>
   );
 }

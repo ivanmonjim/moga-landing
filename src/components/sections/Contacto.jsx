@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FadeInSection from "../ui/FadeInSection";
+import SectionEyebrow from "../ui/SectionEyebrow";
 
 const initialForm = { nombre: "", correo: "", mensaje: "" };
 
@@ -22,6 +23,13 @@ export default function Contacto() {
     <section id="contacto" className="bg-bg-soft py-24 md:py-32">
       <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-2">
         <FadeInSection>
+          <SectionEyebrow>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M4 4h16v16H4z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="m4 6 8 7 8-7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Contacto
+          </SectionEyebrow>
           <h2 className="text-3xl font-extrabold text-text-primary sm:text-4xl">
             Hablemos de tu <span className="text-gradient">negocio</span>
           </h2>

@@ -1,9 +1,11 @@
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Hero from "./components/sections/Hero";
+import Confianza from "./components/sections/Confianza";
 import Servicios from "./components/sections/Servicios";
 import Precios from "./components/sections/Precios";
 import PorQueMoga from "./components/sections/PorQueMoga";
+import ComoFunciona from "./components/sections/ComoFunciona";
 import Contacto from "./components/sections/Contacto";
 
 export default function App() {
@@ -12,9 +14,11 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <Confianza />
         <Servicios />
-        <Precios />
         <PorQueMoga />
+        <ComoFunciona />
+        <Precios />
         <Contacto />
       </main>
       <Footer />

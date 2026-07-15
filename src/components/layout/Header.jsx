@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Logo from "../ui/Logo";
+import AccederDropdown from "../ui/AccederDropdown";
 import { navLinks } from "../../data/navLinks";
+import { servicios } from "../../data/servicios";
+import { WHATSAPP_URL } from "../../data/whatsapp";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,8 +39,12 @@ export default function Header() {
           ))}
         </nav>
 
+        <AccederDropdown items={servicios} className="hidden md:block" />
+
         <a
-          href="#contacto"
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden rounded-full bg-gradient-main px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_25px_rgba(139,61,255,0.35)] transition-transform hover:scale-105 md:inline-block"
         >
           Contactar
@@ -72,8 +79,31 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
+
+            <div className="mt-2 border-t border-white/5 pt-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                Acceder
+              </p>
+              <div className="flex flex-col gap-3">
+                {servicios.map((s) => (
+                  <a
+                    key={s.titulo}
+                    href={s.sistemaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMenuOpen(false)}
+                    className="text-base font-medium text-text-secondary hover:text-text-primary"
+                  >
+                    {s.titulo}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <a
-              href="#contacto"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
               className="mt-2 rounded-full bg-gradient-main px-5 py-2.5 text-center text-sm font-semibold text-white"
             >
