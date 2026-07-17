@@ -1,6 +1,7 @@
 import Logo from "../ui/Logo";
 import { navLinks } from "../../data/navLinks";
 import { socialLinks } from "../../data/social";
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY } from "../../data/contacto";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -45,9 +46,8 @@ export default function Footer() {
           <div>
             <h3 className="mb-3 text-sm font-semibold text-text-primary">Contacto</h3>
             <ul className="space-y-2 text-sm text-text-secondary">
-              {/* TODO: actualizar datos de contacto reales */}
-              <li>correo@moga.com</li>
-              <li>+52 000 000 0000</li>
+              <li>{CONTACT_EMAIL}</li>
+              <li>{CONTACT_PHONE_DISPLAY}</li>
             </ul>
           </div>
         </div>

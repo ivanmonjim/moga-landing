@@ -1,7 +1,9 @@
 export const planes = [
   {
     nombre: "Básico",
-    precio: "$X/mes", // TODO: actualizar precio real
+    precioTachado: "$1,949/mes",
+    precio: "$1,499/mes",
+    descuento: "30%",
     destacado: false,
     caracteristicas: [
       "1 canal de atención (WhatsApp o llamada)",
@@ -14,7 +16,9 @@ export const planes = [
   },
   {
     nombre: "Profesional",
-    precio: "$X/mes", // TODO: actualizar precio real
+    precioTachado: "$3,499/mes",
+    precio: "$2,499/mes",
+    descuento: "40%",
     destacado: true,
     caracteristicas: [
       "Canales WhatsApp y llamada telefónica",
@@ -28,7 +32,9 @@ export const planes = [
   },
   {
     nombre: "Empresarial",
-    precio: "$X/mes", // TODO: actualizar precio real
+    precioTachado: "$6,479/mes",
+    precio: "$3,999/mes",
+    descuento: "62%",
     destacado: false,
     caracteristicas: [
       "Canales y volumen ilimitados",
@@ -37,6 +43,21 @@ export const planes = [
       "IA entrenada con tu contenido",
       "Soporte dedicado 24/7",
     ],
-    cta: "Más información",
+    cta: "Contratar",
+  },
+  {
+    nombre: "Reconocimiento Facial",
+    precioTachado: "$3,749/mes",
+    precio: "$2,499/mes",
+    descuento: "50%",
+    destacado: false,
+    caracteristicas: [
+      "Sistema de fichaje con reconocimiento facial",
+      "Registro de entradas y salidas",
+      "Control de retardos y faltas",
+      "Reportes de asistencia",
+      "Exportación de información para nómina",
+    ],
+    cta: "Contratar",
   },
 ];

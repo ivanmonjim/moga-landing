@@ -1,7 +1,6 @@
 import FadeInSection from "../ui/FadeInSection";
 import SectionEyebrow from "../ui/SectionEyebrow";
-import PrecioCard from "../ui/PrecioCard";
-import { planes } from "../../data/precios";
+import PreciosCarousel from "../ui/PreciosCarousel";
 
 export default function Precios() {
   return (
@@ -22,13 +21,11 @@ export default function Precios() {
             automatización con IA.
           </p>
         </FadeInSection>
-
-        <div className="grid gap-8 md:grid-cols-3">
-          {planes.map((plan, i) => (
-            <PrecioCard key={plan.nombre} {...plan} delay={i * 120} />
-          ))}
-        </div>
       </div>
+
+      <FadeInSection delay={100} className="mx-auto max-w-6xl">
+        <PreciosCarousel />
+      </FadeInSection>
     </section>
   );
 }

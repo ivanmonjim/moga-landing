@@ -1,6 +1,11 @@
 import { useState } from "react";
 import FadeInSection from "../ui/FadeInSection";
 import SectionEyebrow from "../ui/SectionEyebrow";
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from "../../data/contacto";
+import { socialLinks } from "../../data/social";
+import { InstagramIcon, TikTokIcon } from "../ui/SocialIcons";
+
+const socialIcons = { Instagram: InstagramIcon, TikTok: TikTokIcon };
 
 const initialForm = { nombre: "", correo: "", mensaje: "" };
 
@@ -14,7 +19,11 @@ export default function Contacto() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: conectar a un endpoint real (correo, CRM, etc.) — por ahora solo confirma en pantalla
+    const asunto = encodeURIComponent(`Nuevo contacto desde la web — ${form.nombre}`);
+    const cuerpo = encodeURIComponent(
+      `Nombre: ${form.nombre}\nCorreo: ${form.correo}\n\nMensaje:\n${form.mensaje}`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${asunto}&body=${cuerpo}`;
     setEnviado(true);
     setForm(initialForm);
   };
@@ -38,19 +47,39 @@ export default function Contacto() {
           </p>
 
           <div className="mt-10 space-y-4 text-sm text-text-secondary">
-            {/* TODO: actualizar con los datos de contacto reales */}
-            <div className="flex items-center gap-3">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 hover:text-text-primary">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-bg-card text-primary">
                 ✉
               </span>
-              correo@moga.com
-            </div>
-            <div className="flex items-center gap-3">
+              {CONTACT_EMAIL}
+            </a>
+            <a
+              href={`tel:${CONTACT_PHONE_TEL}`}
+              className="flex items-center gap-3 hover:text-text-primary"
+            >
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-bg-card text-primary">
                 ☎
               </span>
-              +52 000 000 0000
-            </div>
+              {CONTACT_PHONE_DISPLAY}
+            </a>
+
+            {socialLinks.map((social) => {
+              const Icon = socialIcons[social.label];
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-text-primary"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-bg-card text-primary">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  {social.label} <span className="text-text-muted">{social.handle}</span>
+                </a>
+              );
+            })}
           </div>
         </FadeInSection>
 
@@ -116,7 +145,7 @@ export default function Contacto() {
 
             {enviado && (
               <p className="mt-4 text-center text-sm text-success">
-                ¡Gracias! Te contactaremos pronto.
+                Se abrirá tu cliente de correo para enviar el mensaje a {CONTACT_EMAIL}.
               </p>
             )}
           </form>

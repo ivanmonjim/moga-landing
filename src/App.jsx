@@ -6,6 +6,7 @@ import Servicios from "./components/sections/Servicios";
 import Precios from "./components/sections/Precios";
 import PorQueMoga from "./components/sections/PorQueMoga";
 import ComoFunciona from "./components/sections/ComoFunciona";
+import FAQ from "./components/sections/FAQ";
 import Contacto from "./components/sections/Contacto";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <PorQueMoga />
         <ComoFunciona />
         <Precios />
+        <FAQ />
         <Contacto />
       </main>
       <Footer />

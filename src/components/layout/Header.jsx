@@ -8,6 +8,7 @@ import { WHATSAPP_URL } from "../../data/whatsapp";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const sistemasDisponibles = servicios.filter((s) => !s.proximamente);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -39,7 +40,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <AccederDropdown items={servicios} className="hidden md:block" />
+        <AccederDropdown items={sistemasDisponibles} className="hidden md:block" />
 
         <a
           href={WHATSAPP_URL}
@@ -85,7 +86,7 @@ export default function Header() {
                 Acceder
               </p>
               <div className="flex flex-col gap-3">
-                {servicios.map((s) => (
+                {sistemasDisponibles.map((s) => (
                   <a
                     key={s.titulo}
                     href={s.sistemaUrl}

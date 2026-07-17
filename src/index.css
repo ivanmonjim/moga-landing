@@ -20,6 +20,11 @@
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
+
+  /* Acento amarillo MOGA: usado como acento secundario puntual
+     (carrusel de servicios, FAQ) sin reemplazar la base azul/morada. */
+  --color-accent: #ffc531;
+  --color-accent-dark: #e0a600;
 }
 
 html {
@@ -48,4 +53,28 @@ body {
 
 .bg-gradient-card {
   background: linear-gradient(135deg, #004cff, #2e1065 52%, #8b3dff);
+}
+
+.bg-gradient-yellow {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dark));
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
