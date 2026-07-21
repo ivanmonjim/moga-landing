@@ -8,3 +8,7 @@ function buildWhatsappUrl(mensaje) {
 export const WHATSAPP_URL = buildWhatsappUrl("Hola, quiero más información sobre Moga");
 
 export const WHATSAPP_URL_CONTRATAR = buildWhatsappUrl("Hola, quiero contratar sus servicios");
+
+export function buildServiceWhatsappUrl(servicio) {
+  return buildWhatsappUrl(`Hola, quiero información sobre ${servicio.titulo}`);
+}

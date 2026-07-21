@@ -31,6 +31,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Nota: NO usar overflow-x:hidden en html/body como seguro genérico contra
+   scroll horizontal — fuerza overflow-y a "auto" en ambos (regla del propio
+   spec de CSS) y eso rompe position:sticky en todas las secciones pineadas
+   (Hero, Servicios, Galería, cierre de Contacto). El scroll horizontal se
+   corrige en el origen (ver FAQ.jsx, GaleriaSistemas.jsx, Header.jsx). */
+
 body {
   margin: 0;
   font-family: var(--font-sans);

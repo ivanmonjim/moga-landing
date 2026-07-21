@@ -40,8 +40,8 @@ export default function FAQ() {
           </p>
         </FadeInSection>
 
-        <div className="grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-14">
-          <FadeInSection delay={80}>
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[260px_1fr] lg:gap-14">
+          <FadeInSection delay={80} className="min-w-0">
             <div className="hidden flex-col gap-2 lg:flex">
               {faqCategories.map((cat) => (
                 <button

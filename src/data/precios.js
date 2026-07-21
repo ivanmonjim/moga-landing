@@ -1,63 +1,7 @@
-export const planes = [
-  {
-    nombre: "Básico",
-    precioTachado: "$1,949/mes",
-    precio: "$1,499/mes",
-    descuento: "30%",
-    destacado: false,
-    caracteristicas: [
-      "1 canal de atención (WhatsApp o llamada)",
-      "Agendamiento automatizado con IA",
-      "Hasta 200 interacciones/mes",
-      "Panel de administración básico",
-      "Soporte por correo",
-    ],
-    cta: "Contratar",
-  },
-  {
-    nombre: "Profesional",
-    precioTachado: "$3,499/mes",
-    precio: "$2,499/mes",
-    descuento: "40%",
-    destacado: true,
-    caracteristicas: [
-      "Canales WhatsApp y llamada telefónica",
-      "IA para citas o pedidos en tiempo real",
-      "Hasta 1,000 interacciones/mes",
-      "Dashboard con estadísticas",
-      "Alertas en tiempo real",
-      "Soporte prioritario",
-    ],
-    cta: "Contratar",
-  },
-  {
-    nombre: "Empresarial",
-    precioTachado: "$6,479/mes",
-    precio: "$3,999/mes",
-    descuento: "62%",
-    destacado: false,
-    caracteristicas: [
-      "Canales y volumen ilimitados",
-      "Integraciones personalizadas",
-      "Múltiples sucursales/usuarios",
-      "IA entrenada con tu contenido",
-      "Soporte dedicado 24/7",
-    ],
-    cta: "Contratar",
-  },
-  {
-    nombre: "Reconocimiento Facial",
-    precioTachado: "$3,749/mes",
-    precio: "$2,499/mes",
-    descuento: "50%",
-    destacado: false,
-    caracteristicas: [
-      "Sistema de fichaje con reconocimiento facial",
-      "Registro de entradas y salidas",
-      "Control de retardos y faltas",
-      "Reportes de asistencia",
-      "Exportación de información para nómina",
-    ],
-    cta: "Contratar",
-  },
-];
+// Los precios por servicio viven en servicios.js (fuente única de verdad).
+// Aquí solo se define la cuota única de implementación, aplicable a todos los
+// servicios y mostrada por separado, nunca incluida en la mensualidad.
+export const IMPLEMENTACION = {
+  monto: "$400 MXN",
+  texto: "Configuramos todo para que tu sistema quede listo y funcionando",
+};

@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { planes } from "../../data/precios";
-import { WHATSAPP_URL_CONTRATAR } from "../../data/whatsapp";
+import { servicios } from "../../data/servicios";
+import { buildServiceWhatsappUrl } from "../../data/whatsapp";
+import { COLOR_THEMES } from "../../data/colorThemes";
+import CircuitThumb from "./CircuitThumb";
 import { CAROUSEL_EASE, getViewportWidth, resolve, useBreakpoint } from "../../hooks/useCardCarousel";
 
 const CARD_WIDTH = {
   base: () => getViewportWidth() * 0.82,
-  sm: 300,
-  lg: 340,
+  sm: 320,
+  lg: 360,
 };
 const GAP = { base: 16, sm: 20, lg: 24 };
 const SWIPE_THRESHOLD = 48;
+const FEATURES_VISIBLE = 6;
 
 function ArrowButton({ direction, onClick, disabled, label }) {
   return (
@@ -31,41 +34,38 @@ function ArrowButton({ direction, onClick, disabled, label }) {
   );
 }
 
-function PrecioCard({ plan, width }) {
+function PrecioCard({ servicio, width }) {
+  const theme = COLOR_THEMES[servicio.color] ?? COLOR_THEMES.primary;
+  const visibles = servicio.caracteristicas.slice(0, FEATURES_VISIBLE);
+  const restantes = servicio.caracteristicas.length - visibles.length;
+
   return (
     <div
-      className={`relative flex h-full shrink-0 flex-col rounded-2xl p-8 ${
-        plan.destacado
-          ? "border border-secondary/40 bg-gradient-card shadow-[0_0_50px_rgba(139,61,255,0.25)]"
-          : "border border-white/8 bg-bg-card"
-      }`}
-      style={{ width: `${width}px` }}
+      id={`precio-${servicio.id}`}
+      className="flex h-full shrink-0 scroll-mt-28 flex-col rounded-2xl border border-white/8 bg-bg-card p-7"
+      style={{ width: `${width}px`, boxShadow: `0 0 0 1px ${theme.ring} inset` }}
     >
-      {plan.descuento && (
-        <span className="absolute right-6 top-6 rounded-full bg-accent px-3 py-1 text-xs font-bold text-bg-main">
-          -{plan.descuento}
-        </span>
-      )}
-
-      {plan.destacado && (
-        <span className="mb-4 w-fit rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white">
-          Más popular
-        </span>
-      )}
-
-      <h3 className="text-lg font-bold text-text-primary">{plan.nombre}</h3>
-
-      <div className="mt-2 mb-6">
-        {plan.precioTachado && (
-          <p className={`text-sm line-through ${plan.destacado ? "text-white/50" : "text-text-muted"}`}>
-            {plan.precioTachado}
-          </p>
-        )}
-        <p className="text-3xl font-extrabold text-text-primary">{plan.precio}</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="text-lg font-bold text-text-primary">{servicio.titulo}</h3>
+          <div className="mt-2">
+            {servicio.precio ? (
+              <p className="text-3xl font-extrabold text-text-primary">
+                {servicio.precio}
+                <span className="ml-1 text-sm font-semibold text-text-muted">{servicio.precioSufijo}</span>
+              </p>
+            ) : (
+              <p className="text-xl font-extrabold" style={{ color: theme.hex }}>
+                {servicio.precioTexto}
+              </p>
+            )}
+          </div>
+        </div>
+        <CircuitThumb servicio={servicio} size="sm" />
       </div>
 
-      <ul className="mb-8 flex-1 space-y-3">
-        {plan.caracteristicas.map((item) => (
+      <ul className="mt-6 mb-8 flex-1 space-y-3">
+        {visibles.map((item) => (
           <li key={item} className="flex items-start gap-2.5 text-sm text-text-secondary">
             <svg
               className="mt-0.5 h-4 w-4 shrink-0 text-cyan"
@@ -79,26 +79,26 @@ function PrecioCard({ plan, width }) {
             {item}
           </li>
         ))}
+        {restantes > 0 && (
+          <li className="pl-6.5 text-xs font-medium text-text-muted">+{restantes} funciones más</li>
+        )}
       </ul>
 
       <a
-        href={WHATSAPP_URL_CONTRATAR}
+        href={buildServiceWhatsappUrl(servicio)}
         target="_blank"
         rel="noopener noreferrer"
-        className={`rounded-full px-6 py-3 text-center text-sm font-semibold transition-transform hover:scale-105 ${
-          plan.destacado
-            ? "bg-white text-bg-main"
-            : "bg-gradient-main text-white shadow-[0_0_25px_rgba(139,61,255,0.3)]"
-        }`}
+        className="rounded-full px-6 py-3 text-center text-sm font-semibold text-white transition-transform hover:scale-105"
+        style={{ backgroundColor: theme.hex, boxShadow: `0 0 25px ${theme.soft}` }}
       >
-        {plan.cta}
+        Solicitar información
       </a>
     </div>
   );
 }
 
 export default function PreciosCarousel() {
-  const total = planes.length;
+  const total = servicios.length;
   const bp = useBreakpoint();
   const trackRef = useRef(null);
   const innerRef = useRef(null);
@@ -178,7 +178,7 @@ export default function PreciosCarousel() {
         ref={trackRef}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Planes de MOGA"
+        aria-label="Precios de MOGA"
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
@@ -197,8 +197,8 @@ export default function PreciosCarousel() {
             transitionTimingFunction: `cubic-bezier(${CAROUSEL_EASE.join(",")})`,
           }}
         >
-          {planes.map((plan) => (
-            <PrecioCard key={plan.nombre} plan={plan} width={cardWidth} />
+          {servicios.map((servicio) => (
+            <PrecioCard key={servicio.id} servicio={servicio} width={cardWidth} />
           ))}
         </div>
       </div>
@@ -206,19 +206,19 @@ export default function PreciosCarousel() {
       <div className="mt-8 flex items-center justify-center gap-6">
         <ArrowButton
           direction="prev"
-          label="Plan anterior"
+          label="Servicio anterior"
           disabled={activeIndex === 0}
           onClick={goPrev}
         />
 
-        <div className="flex items-center gap-2" role="tablist" aria-label="Selecciona un plan">
-          {planes.map((plan, i) => (
+        <div className="flex items-center gap-2" role="tablist" aria-label="Selecciona un servicio">
+          {servicios.map((servicio, i) => (
             <button
-              key={plan.nombre}
+              key={servicio.id}
               type="button"
               role="tab"
               aria-selected={i === activeIndex}
-              aria-label={`Ver plan ${plan.nombre}`}
+              aria-label={`Ver precio de ${servicio.titulo}`}
               aria-controls={`${liveRegionId}-panel`}
               onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
@@ -230,14 +230,14 @@ export default function PreciosCarousel() {
 
         <ArrowButton
           direction="next"
-          label="Siguiente plan"
+          label="Siguiente servicio"
           disabled={activeIndex === total - 1}
           onClick={goNext}
         />
       </div>
 
       <p id={`${liveRegionId}-panel`} className="sr-only" aria-live="polite">
-        {`Mostrando plan ${activeIndex + 1} de ${total}: ${planes[activeIndex].nombre}`}
+        {`Mostrando precio ${activeIndex + 1} de ${total}: ${servicios[activeIndex].titulo}`}
       </p>
     </div>
   );

@@ -56,10 +56,13 @@ export default function ComoFunciona() {
           </p>
         </FadeInSection>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="relative grid gap-6 sm:grid-cols-2">
+          <div className="pointer-events-none absolute inset-x-10 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent sm:block" />
           {proceso.map((p, i) => (
-            <FadeInSection key={p.titulo} delay={i * 100} className="h-full">
-              <div className="relative h-full rounded-2xl border border-white/8 bg-bg-card p-7 transition-colors hover:border-secondary/30">
+            <FadeInSection key={p.titulo} delay={i * 110} blur scale className="h-full">
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-white/8 bg-bg-card p-7 transition-colors hover:border-secondary/30">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-secondary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-70" />
+
                 <span className="absolute right-6 top-7 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold text-text-muted">
                   {p.paso}
                 </span>

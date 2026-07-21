@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import Logo from "../ui/Logo";
-import AccederDropdown from "../ui/AccederDropdown";
 import { navLinks } from "../../data/navLinks";
-import { servicios } from "../../data/servicios";
 import { WHATSAPP_URL } from "../../data/whatsapp";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const sistemasDisponibles = servicios.filter((s) => !s.proximamente);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -18,17 +15,19 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-bg-main/90 backdrop-blur-md border-b border-white/5" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 transition-[padding] duration-300 sm:px-6">
+      <div
+        className={`flex w-full items-center justify-between rounded-full border transition-all duration-300 ${
+          scrolled
+            ? "mt-3 max-w-4xl gap-6 border-white/10 bg-bg-main/85 px-5 py-2.5 shadow-[0_15px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+            : "mt-5 max-w-6xl gap-8 border-white/5 bg-bg-main/40 px-6 py-3.5 backdrop-blur-md"
+        }`}
+      >
         <a href="#top" className="shrink-0">
-          <Logo />
+          <Logo className={`transition-all duration-300 ${scrolled ? "h-9" : "h-11"}`} />
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -40,19 +39,17 @@ export default function Header() {
           ))}
         </nav>
 
-        <AccederDropdown items={sistemasDisponibles} className="hidden md:block" />
-
         <a
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden rounded-full bg-gradient-main px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_25px_rgba(139,61,255,0.35)] transition-transform hover:scale-105 md:inline-block"
+          className="hidden rounded-full bg-gradient-main px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_25px_rgba(139,61,255,0.35)] transition-transform hover:scale-105 lg:inline-block"
         >
           Contactar
         </a>
 
         <button
-          className="flex items-center justify-center rounded-md p-2 text-text-primary md:hidden"
+          className="flex items-center justify-center rounded-md p-2 text-text-primary lg:hidden"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={menuOpen}
@@ -68,8 +65,8 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-white/5 bg-bg-main px-6 pb-6 md:hidden">
-          <nav className="flex flex-col gap-4 pt-4">
+        <div className="absolute inset-x-4 top-[4.75rem] max-w-6xl rounded-3xl border border-white/10 bg-bg-main/95 px-6 pb-6 shadow-[0_25px_70px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:inset-x-6 lg:hidden">
+          <nav className="flex flex-col gap-4 pt-5">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -80,26 +77,6 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
-
-            <div className="mt-2 border-t border-white/5 pt-4">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
-                Acceder
-              </p>
-              <div className="flex flex-col gap-3">
-                {sistemasDisponibles.map((s) => (
-                  <a
-                    key={s.titulo}
-                    href={s.sistemaUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMenuOpen(false)}
-                    className="text-base font-medium text-text-secondary hover:text-text-primary"
-                  >
-                    {s.titulo}
-                  </a>
-                ))}
-              </div>
-            </div>
 
             <a
               href={WHATSAPP_URL}

@@ -14,6 +14,13 @@ const HEIGHTS = {
 };
 const GAP = { base: 12, sm: 16, lg: 16 };
 
+const COLOR_THEMES = {
+  primary: { hex: "#0f6fff", glow: "rgba(15,111,255,0.55)", soft: "rgba(15,111,255,0.28)", ring: "rgba(15,111,255,0.45)" },
+  secondary: { hex: "#8b3dff", glow: "rgba(139,61,255,0.55)", soft: "rgba(139,61,255,0.28)", ring: "rgba(139,61,255,0.45)" },
+  cyan: { hex: "#00c8ff", glow: "rgba(0,200,255,0.55)", soft: "rgba(0,200,255,0.26)", ring: "rgba(0,200,255,0.45)" },
+  accent: { hex: "#ffc531", glow: "rgba(255,197,49,0.55)", soft: "rgba(255,197,49,0.26)", ring: "rgba(255,197,49,0.45)" },
+};
+
 const cardBase =
   "group relative shrink-0 overflow-hidden rounded-[28px] border transition-[width,height,opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70";
 
@@ -36,22 +43,23 @@ function ArrowButton({ direction, onClick, label }) {
   );
 }
 
-function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp }) {
+function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp, total }) {
   const width = resolve(isActive ? WIDTHS[bp].active : WIDTHS[bp].side);
   const height = isActive ? HEIGHTS[bp].active : HEIGHTS[bp].side;
+  const theme = COLOR_THEMES[servicio.color] ?? COLOR_THEMES.primary;
 
   return (
     <div
       className={`${cardBase} ${
-        isActive
-          ? "border-accent/40 shadow-[0_0_50px_rgba(255,197,49,0.16)]"
-          : "cursor-pointer border-white/10 opacity-70 hover:opacity-90"
+        isActive ? "border-white/10" : "cursor-pointer border-white/10 opacity-70 hover:opacity-90"
       }`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
         transitionDuration: "620ms",
         transitionTimingFunction: `cubic-bezier(${CAROUSEL_EASE.join(",")})`,
+        background: `radial-gradient(120% 85% at 50% 12%, ${theme.soft} 0%, transparent 60%), linear-gradient(180deg, #0b1224 0%, #030712 100%)`,
+        boxShadow: isActive ? `0 0 60px ${theme.soft}` : "none",
       }}
       onClick={!isActive ? onSelect : undefined}
       role={!isActive ? "button" : undefined}
@@ -73,16 +81,18 @@ function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp }) {
         alt={servicio.imagenAlt}
         loading={index === 0 ? "eager" : "lazy"}
         decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 m-auto h-[72%] w-[72%] object-contain mix-blend-lighten"
+        style={{ filter: `drop-shadow(0 0 36px ${theme.glow})` }}
       />
 
-      <div
-        className={`absolute inset-0 ${
-          isActive
-            ? "bg-gradient-to-b from-bg-main/10 via-bg-main/55 to-bg-main/95"
-            : "bg-bg-main/55"
-        }`}
-      />
+      {isActive && (
+        <span
+          className="absolute left-5 top-5 rounded-full border px-3 py-1 text-[11px] font-semibold tabular-nums text-text-primary/90 backdrop-blur-sm"
+          style={{ borderColor: theme.ring, backgroundColor: "rgba(3,7,18,0.45)" }}
+        >
+          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </span>
+      )}
 
       {isActive && (
         <AnimatePresence mode="popLayout">
@@ -92,21 +102,22 @@ function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: CAROUSEL_EASE }}
-            className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:p-7"
+            className="absolute inset-x-3 bottom-3 flex flex-col gap-3 rounded-2xl border border-white/10 bg-bg-main/70 p-5 backdrop-blur-md sm:p-6"
           >
             <h3 className="text-xl font-extrabold text-text-primary sm:text-2xl">
               {servicio.titulo}
             </h3>
-            <p className="text-sm leading-relaxed text-text-secondary line-clamp-3">
+            <p className="text-sm leading-relaxed text-text-secondary line-clamp-2">
               {servicio.descripcion}
             </p>
 
             {servicio.caracteristicas.length > 0 && (
               <ul className="flex flex-wrap gap-2">
-                {servicio.caracteristicas.slice(0, 4).map((item) => (
+                {servicio.caracteristicas.slice(0, 3).map((item) => (
                   <li
                     key={item}
-                    className="rounded-full border border-white/15 bg-bg-main/40 px-3 py-1 text-[11px] font-medium text-text-secondary backdrop-blur-sm"
+                    className="rounded-full border px-3 py-1 text-[11px] font-medium text-text-secondary"
+                    style={{ borderColor: "rgba(255,255,255,0.12)", backgroundColor: "rgba(255,255,255,0.04)" }}
                   >
                     {item}
                   </li>
@@ -117,7 +128,8 @@ function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp }) {
             {servicio.cta ? (
               <a
                 href="#contacto"
-                className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full bg-gradient-yellow px-5 py-2.5 text-sm font-semibold text-bg-main transition-transform hover:scale-105"
+                className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-bg-main transition-transform hover:scale-105"
+                style={{ backgroundColor: theme.hex }}
               >
                 {servicio.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -125,7 +137,10 @@ function ServicioCardCarousel({ servicio, isActive, onSelect, index, bp }) {
                 </svg>
               </a>
             ) : (
-              <span className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-5 py-2.5 text-sm font-semibold text-accent">
+              <span
+                className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border px-5 py-2.5 text-sm font-semibold"
+                style={{ borderColor: theme.ring, backgroundColor: theme.soft, color: theme.hex }}
+              >
                 Muy pronto
               </span>
             )}
@@ -175,6 +190,7 @@ export default function ServiciosCarousel() {
               key={servicio.id}
               servicio={servicio}
               index={i}
+              total={total}
               bp={bp}
               isActive={i === activeIndex}
               onSelect={() => {

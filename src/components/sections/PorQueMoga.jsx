@@ -104,8 +104,8 @@ export default function PorQueMoga() {
           {beneficios.map((b, i) => {
             const Mockup = mockups[i % mockups.length];
             return (
-              <FadeInSection key={b.titulo} delay={i * 100} className={spans[i % spans.length]}>
-                <div className="h-full rounded-2xl border border-white/8 bg-bg-card p-6 transition-colors hover:border-secondary/30 sm:p-7">
+              <FadeInSection key={b.titulo} delay={i * 120} blur scale className={spans[i % spans.length]}>
+                <div className="h-full rounded-2xl border border-white/8 bg-bg-card p-6 transition-colors hover:border-secondary/30 hover:shadow-[0_0_40px_rgba(139,61,255,0.12)] sm:p-7">
                   <h3 className="text-base font-bold text-text-primary">{b.titulo}</h3>
                   <p className="mt-1.5 text-sm text-text-secondary">{b.descripcion}</p>
                   <Mockup />

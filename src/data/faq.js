@@ -53,7 +53,7 @@ export const faqCategories = [
   },
   {
     id: "delivery",
-    label: "MOGA Delivery",
+    label: "MOGA Delivery IA",
     questions: [
       {
         question: "¿MOGA Delivery es solamente para restaurantes?",
@@ -78,8 +78,8 @@ export const faqCategories = [
     ],
   },
   {
-    id: "asistencia",
-    label: "MOGA Asistencia",
+    id: "fichaje",
+    label: "MOGA Fichaje",
     questions: [
       {
         question: "¿Cómo funciona el reconocimiento facial?",
