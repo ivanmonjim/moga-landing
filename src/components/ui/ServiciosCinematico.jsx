@@ -139,7 +139,11 @@ export default function ServiciosCinematico() {
   const bp = useBreakpoint();
   const { targetRef, scrollYProgress, prefersReducedMotion } = useScrollStory();
   const total = servicios.length;
-  const useStatic = bp === "base" || prefersReducedMotion;
+  // El panel pineado usa "h-screen overflow-hidden" con una sola columna
+  // hasta "lg" (donde recién entra lg:grid-cols-2 y el contenido se acorta
+  // al quedar en dos columnas). En tablet ("sm") el apilado a una columna
+  // es más alto que la pantalla y el overflow-hidden corta los botones.
+  const useStatic = bp !== "lg" || prefersReducedMotion;
 
   if (useStatic) {
     return (
