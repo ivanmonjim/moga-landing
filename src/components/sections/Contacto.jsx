@@ -32,7 +32,7 @@ function CierreCinema() {
   return (
     <div ref={ref} className="relative" style={{ height: simplify ? "auto" : "130vh" }}>
       <div
-        className={`flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center ${
+        className={`relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 text-center ${
           simplify ? "" : "sticky top-0"
         }`}
       >
